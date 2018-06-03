@@ -1,5 +1,6 @@
 package com.application.monitoringApp;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -35,4 +36,16 @@ public class AppTest
     {
         assertTrue( true );
     }
+    
+        public void testStatus() {
+        String message = "GREEN";
+        Assert.assertEquals(5, message.length());
+    }
+        
+        public void testStatusCode() {
+            String message = "200";
+            Assert.assertEquals(3, message.length());
+        }
+    
+    
 }

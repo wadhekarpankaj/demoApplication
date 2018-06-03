@@ -1,20 +1,26 @@
 package com.application.monitoringApp;
 
-
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.util.Formatter;
 
 
-public class CurlDemo {
+
+public class CurlDemo1 {
 
 	public static void main(String[] args) {
+		
 		
 		sendRequest();
 	}
 	
-	private static void sendRequest(){
+	public static String[] sendRequest(){
 		
+		String comp_status = null;
+		Formatter formatter = new Formatter();
+	    System.out.println(formatter.format("%20s %20s %20s %20s", "timestamp_epoch", "status_check", "URL", "response_time_ms"));
+	    
 		String[] urls = {"https://www.youtube.com", 
 						"https://www.google.com", 
 						"https://www.mkyong.com",
@@ -30,7 +36,7 @@ public class CurlDemo {
 			long milliStart = System.currentTimeMillis();
           try {
   			
-  			System.out.println("URL= "+s);
+  			//System.out.println("URL= "+s);
   			URL url = new URL(s);
   	        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
   	        connection.setRequestMethod("GET");
@@ -46,14 +52,16 @@ public class CurlDemo {
   	   	}*/
   	       
   	       //System.out.println(" "); 
-  	       System.out.println("Response code is "+code);
+  	       //System.out.println("Response code is "+code);
   	        
   	        if (code==200)
   	        {
-  	            System.out.println("Component Status- GREEN");
+  	        	comp_status="GREEN";
+  	           // System.out.println("Component Status-"+comp_status);
   	        }
   	        else {
-  	        	System.out.println("Not responding very well");
+  	        	//System.out.println("Not responding very well");
+  	        	comp_status="RED";
   	        }
   		 
   		    } catch (Exception e) {
@@ -63,25 +71,33 @@ public class CurlDemo {
         
   		long milliEnd = System.currentTimeMillis();
   		long milliTime = milliEnd - milliStart;
-  		reportResponseTimes(milliTime);
+  		String res_time=reportResponseTimes(milliTime);
   		
   		
   		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        System.out.println("Current timestamp= "+timestamp);
-        System.out.println("");
+       // System.out.println("Current timestamp= "+timestamp);
+       // System.out.println("");
         
+        formatter = new Formatter();
+        //String rowData = "info" + i;
+        System.out.println(formatter.format("%20s %20s %20s %20s ", timestamp, comp_status, s, res_time));
           
         }
+		return urls;
 		
     }
 	
-	private static void reportResponseTimes(long milliTime)
+	private static String reportResponseTimes(long milliTime)
     {
         // convert nanoseconds to milliseconds and display both times with three digits of precision (microsecond)
         String milliFormatted = String.format("%,.3f", milliTime / 1.0 );
-        System.out.println("Responce time in Milliseconds: " + milliFormatted);
+        //System.out.println("Responce time in Milliseconds: " + milliFormatted);
+        return milliFormatted;
     }
+
+	
 	
 	
 
 }
+
