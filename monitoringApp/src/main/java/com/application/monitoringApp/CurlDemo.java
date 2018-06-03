@@ -7,7 +7,7 @@ import java.util.Formatter;
 
 
 
-public class CurlDemo1 {
+public class CurlDemo {
 
 	public static void main(String[] args) {
 		
